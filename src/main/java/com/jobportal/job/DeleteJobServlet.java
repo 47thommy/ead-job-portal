@@ -39,17 +39,17 @@ public class DeleteJobServlet extends HttpServlet {
                 int rowsAffected = pst.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    // Job deleted successfully
+                    
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/view_jobs");
                     dispatcher.forward(request, response);
                 } else {
-                    // Handle deletion failure
+                    
                     response.sendRedirect("view_job.jsp");
                 }
 
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
-                // Handle exceptions
+                
             } finally {
                 try {
                     if (con != null) {
@@ -60,7 +60,7 @@ public class DeleteJobServlet extends HttpServlet {
                 }
             }
         } else {
-            // Job ID not provided, handle accordingly
+           
             response.sendRedirect("view_job.jsp");
         }
     }

@@ -27,17 +27,17 @@ public class JobCandidatesServlet extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Get the job ID from the request parameter
+        
         int jobId = Integer.parseInt(request.getParameter("id"));
 
-        // Retrieve candidates for the specified job ID from the database
+        
         List<Candidate> candidates = getCandidatesForJob(jobId);
 
-        // Set the candidates in the request attribute
+        
         request.setAttribute("candidates", candidates);
         
 
-        // Forward the request to the candidates.jsp page
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/candidates.jsp");
         dispatcher.forward(request, response);
     }
@@ -47,11 +47,11 @@ public class JobCandidatesServlet extends HttpServlet {
         Connection con = null;
 
         try {
-            // Establish a database connection (you may need to modify this)
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
 
-            // Fetch candidates from the candidates table based on the job ID
+            
             String sql = "SELECT user_email, applied_time, resume_url FROM candidates WHERE job_id = ?";
            
             try (PreparedStatement pst = con.prepareStatement(sql)) {
@@ -69,7 +69,7 @@ public class JobCandidatesServlet extends HttpServlet {
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            // Handle exceptions appropriately
+            
         } finally {
             try {
                 if (con != null) {

@@ -7,7 +7,7 @@ public class Candidate {
     private Timestamp appliedTime;
     private String resumeUrl;
 
-    // Constructor, getters, and setters
+    
 
     public Candidate(String email, Timestamp appliedTime, String resumeUrl) {
         this.email = email;
@@ -15,7 +15,7 @@ public class Candidate {
         this.resumeUrl = resumeUrl;
     }
 
-    // Getters and setters...
+   
 
     public String getEmail() {
         return email;

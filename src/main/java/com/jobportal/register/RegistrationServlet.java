@@ -110,12 +110,12 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
-    // Save file locally
+
     private String uploadToLocalFolder(Part filePart) throws IOException {
         String fileName = getFileName(filePart);
         String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
 
-        // Create the uploads folder if it doesn't exist
+        
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
@@ -126,7 +126,7 @@ public class RegistrationServlet extends HttpServlet {
         try (InputStream fileContent = filePart.getInputStream();
              OutputStream outputStream = new FileOutputStream(filePath)) {
 
-            // Copy the file content to the local file
+            
             byte[] buffer = new byte[4096];
             int bytesRead;
             while ((bytesRead = fileContent.read(buffer)) != -1) {

@@ -47,18 +47,17 @@ public class UpdateJobServlet extends HttpServlet {
             int rowsAffected = pst.executeUpdate();
 
             if (rowsAffected > 0) {
-                // Job updated successfully
-                // Forward the request to ViewJobsServlet
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/view_jobs");
                 dispatcher.forward(request, response);
             } else {
-                // Handle update failure
+                
                 response.sendRedirect("edit_job.jsp?id=" + jobId);
             }
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            // Handle exceptions
+            
         } finally {
             try {
                 if (con != null) {

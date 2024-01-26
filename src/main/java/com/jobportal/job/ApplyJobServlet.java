@@ -27,7 +27,7 @@ public class ApplyJobServlet extends HttpServlet {
             throws ServletException, IOException {
         String phoneNumber = request.getParameter("phoneNumber");
         String coverLetter = request.getParameter("coverLetter");
-        String userEmail = (String) request.getSession().getAttribute("email"); // Assuming user email is stored in the session
+        String userEmail = (String) request.getSession().getAttribute("email"); 
         int jobId = Integer.parseInt(request.getParameter("jobId"));
 
         Connection con = null;
@@ -36,13 +36,13 @@ public class ApplyJobServlet extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
 
-            // Fetch the resume URL from the users table based on the current user's email
+            
             String resumeUrl = getResumeUrlFromUserTable(con,userEmail);
 
-            // Fetch the email of the person who posted the job from the jobs table based on the job id
+            
             String jobPosterEmail = getJobPosterEmailFromJobsTable(con,jobId);
 
-            // Insert the application details into the candidates table
+            
             PreparedStatement pst = con.prepareStatement(
                     "INSERT INTO candidates(user_email, employee_email, phone_number, cover_letter, resume_url,job_id, applied_time) VALUES (?, ?, ?, ?, ?, ?, NOW())");
             pst.setString(1, userEmail);
@@ -55,17 +55,17 @@ public class ApplyJobServlet extends HttpServlet {
             int rowCount = pst.executeUpdate();
 
             if (rowCount > 0) {
-                // Application submitted successfully
+                
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/view_jobs");
                 dispatcher.forward(request, response);
             } else {
-                // Application submission failed
-                response.sendRedirect("error.jsp"); // Redirect to an error page
+                
+                response.sendRedirect("error.jsp"); 
             }
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp"); // Redirect to an error page
+            response.sendRedirect("error.jsp"); 
         } finally {
             try {
                 if (con != null) {
@@ -77,7 +77,7 @@ public class ApplyJobServlet extends HttpServlet {
         }
     }
 
-    // Method to fetch the resume URL from the users table based on the user's email
+    
     private String getResumeUrlFromUserTable(Connection con,String userEmail) throws SQLException {
         try (PreparedStatement pst = con.prepareStatement("SELECT resume_url FROM users WHERE email = ?")) {
             pst.setString(1, userEmail);
@@ -86,12 +86,12 @@ public class ApplyJobServlet extends HttpServlet {
             if (resultSet.next()) {
                 return resultSet.getString("resume_url");
             } else {
-                return null; // Handle the case where the resume URL is not found
+                return null;
             }
         }
     }
 
-    // Method to fetch the email of the person who posted the job from the jobs table based on the job id
+    
     private String getJobPosterEmailFromJobsTable(Connection con, int jobId) throws SQLException {
         try (PreparedStatement pst = con.prepareStatement("SELECT user_email FROM jobs WHERE id = ?")) {
             pst.setInt(1, jobId);
@@ -100,7 +100,7 @@ public class ApplyJobServlet extends HttpServlet {
             if (resultSet.next()) {
                 return resultSet.getString("user_email");
             } else {
-                return null; // Handle the case where the job poster's email is not found
+                return null; 
             }
         }
     }

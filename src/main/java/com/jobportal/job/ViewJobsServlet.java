@@ -36,12 +36,12 @@ public class ViewJobsServlet extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
 
-            // Assuming the user's email is stored in the session attribute "userEmail"
+            
             String userEmail = (String) request.getSession().getAttribute("email");
             String userRole = (String) request.getSession().getAttribute("userRole");
             System.out.println(userRole);
             if ("employer".equals(userRole)) {
-                // If the user is an employer, show only their jobs
+                
                 PreparedStatement pst = con.prepareStatement("SELECT * FROM jobs WHERE user_email = ?");
                 pst.setString(1, userEmail);
                 ResultSet resultSet = pst.executeQuery();
@@ -59,7 +59,7 @@ public class ViewJobsServlet extends HttpServlet {
                     jobs.add(job);
                 }
             } else {
-                // If the user is not an employer, show all jobs
+                
                 PreparedStatement pst = con.prepareStatement("SELECT * FROM jobs");
                 ResultSet resultSet = pst.executeQuery();
 
@@ -105,12 +105,12 @@ public class ViewJobsServlet extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
 
-            // Assuming the user's email is stored in the session attribute "userEmail"
+            
             String userEmail = (String) request.getSession().getAttribute("email");
             String userRole = (String) request.getSession().getAttribute("role");
 
             if ("employer".equals(userRole)) {
-                // If the user is an employer, show only their jobs
+                
                 PreparedStatement pst = con.prepareStatement("SELECT * FROM jobs WHERE user_email = ?");
                 pst.setString(1, userEmail);
                 ResultSet resultSet = pst.executeQuery();
@@ -128,7 +128,7 @@ public class ViewJobsServlet extends HttpServlet {
                     jobs.add(job);
                 }
             } else {
-                // If the user is not an employer, show all jobs
+                
                 PreparedStatement pst = con.prepareStatement("SELECT * FROM jobs");
                 ResultSet resultSet = pst.executeQuery();
 

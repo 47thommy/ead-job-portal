@@ -73,7 +73,7 @@ public class EditJobServlet extends HttpServlet {
                 }
             }
         } else {
-            // Job ID not provided, handle accordingly
+            
             response.sendRedirect("view_job.jsp");
         }
     }
