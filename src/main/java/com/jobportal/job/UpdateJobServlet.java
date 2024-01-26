@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/update_job")
 public class UpdateJobServlet extends HttpServlet {
@@ -26,6 +27,7 @@ public class UpdateJobServlet extends HttpServlet {
         String category = request.getParameter("category");
         String status = request.getParameter("status");
         String description = request.getParameter("desc");
+        HttpSession session = request.getSession();
 
         Connection con = null;
         PreparedStatement pst = null;
@@ -47,12 +49,15 @@ public class UpdateJobServlet extends HttpServlet {
             int rowsAffected = pst.executeUpdate();
 
             if (rowsAffected > 0) {
-
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/view_jobs");
-                dispatcher.forward(request, response);
-            } else {
+            	request.setAttribute("userRole", "employer");
+            	request.setAttribute("status", "success");
+            	
+            	
                 
-                response.sendRedirect("edit_job.jsp?id=" + jobId);
+            } else {
+            	request.setAttribute("status", "invalid");
+            	
+                
             }
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -67,5 +72,7 @@ public class UpdateJobServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("edit_job?id=" + jobId);
+        dispatcher.forward(request, response);
     }
 }

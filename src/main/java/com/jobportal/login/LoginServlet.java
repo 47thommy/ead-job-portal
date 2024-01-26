@@ -51,9 +51,11 @@ public class LoginServlet extends HttpServlet {
 
 				if (rs.next()) {
 					String userRole = rs.getString("role");
+					 String name = rs.getString("username");
 					session.setAttribute("email", rs.getString("email"));
 					session.setAttribute("userRole", userRole);
-					dispatcher=request.getRequestDispatcher("index.jsp");
+					session.setAttribute("name", name);
+					dispatcher=request.getRequestDispatcher("home.jsp");
 				} else {
 					request.setAttribute("status", "failed");
 					dispatcher = request.getRequestDispatcher("login.jsp");

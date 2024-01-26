@@ -37,13 +37,13 @@
 								<label>Location</label> <select name="location"
 									class="custom-select" id="inlineFormCustomSelectPref">
 									<option selected>Choose....</option>
-									<option value="Delhi">Delhi</option>
-									<option value="Bengaluru">Bengaluru</option>
-									<option value="Hyderabad">Hyderabad</option>
-									<option value="Chennai">Chennai</option>
-									<option value="Pune">Pune</option>
-									<option value="Noida">Noida</option>
-									<option value="Gurgaon">Gurgaon</option>
+									<option value="Addis">Addis Ababa</option>
+									<option value="Bahirdar">Bahir dar</option>
+									<option value="Hawassa">Hawassa</option>
+									<option value="Addama">Addama</option>
+									<option value="Mekele">Mekele</option>
+									<option value="Assosa">Assosa</option>
+									<option value="Jijiga">Jijiga</option>
 								</select>
 							</div>
 							<div class="form-group col-md-4">

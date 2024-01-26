@@ -43,7 +43,7 @@
                         <tr>
                             <td><%= candidate.getEmail() %></td>
                             <td><%= dateFormat.format(candidate.getAppliedTime()) %></td>
-                            <td><a href="<%= candidate.getResumeUrl() %>" >View Resume</a></td>
+                            <td><a href="uploads/<%= candidate.getResumeUrl() %>" >View Resume</a></td>
                         </tr>
                     <% } %>
                 </tbody>

@@ -74,15 +74,17 @@ public class RegistrationServlet extends HttpServlet {
                 } else {
                     // Save file locally
                     Part filePart = request.getPart("resume");
-                    String localFilePath = uploadToLocalFolder(filePart);
+                    String fileName = getFileName(filePart);
+                    String localFilePath = uploadToLocalFolder(filePart, fileName);
+                    
 
                     // Insert user data into the database
                     PreparedStatement pst = con.prepareStatement(
-                            "INSERT INTO users(username, password, email,resume_url,role) VALUES (?, ?, ?, ?, ?)");
+                            "INSERT INTO users(username, password, email, resume_url, role) VALUES (?, ?, ?, ?, ?)");
                     pst.setString(1, username);
                     pst.setString(2, password);
                     pst.setString(3, email);
-                    pst.setString(4, localFilePath);
+                    pst.setString(4, fileName); // Store only the file name
                     pst.setString(5, role);
 
                     int rowCount = pst.executeUpdate();
@@ -110,12 +112,9 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
-
-    private String uploadToLocalFolder(Part filePart) throws IOException {
-        String fileName = getFileName(filePart);
+    private String uploadToLocalFolder(Part filePart, String fileName) throws IOException {
         String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
 
-        
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
@@ -126,7 +125,6 @@ public class RegistrationServlet extends HttpServlet {
         try (InputStream fileContent = filePart.getInputStream();
              OutputStream outputStream = new FileOutputStream(filePath)) {
 
-            
             byte[] buffer = new byte[4096];
             int bytesRead;
             while ((bytesRead = fileContent.read(buffer)) != -1) {

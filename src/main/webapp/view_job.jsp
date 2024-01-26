@@ -25,14 +25,37 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6">
             <h5 class="text-center text-primary">All Jobs</h5>
+        </div>
+        <div class="col-md-6">
+            <form action="search" method="get" class="d-flex">
+                <div class="input-group">
+                    <div class="form-outline" data-mdb-input-init>
+                        <input placeholder ="search" type="search" name="search" id="form1" class="form-control" />
+                        
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm" data-mdb-ripple-init>
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+  
+</div>
+
+
+            
 
             <%
                 List<Job> jobs = (List<Job>) request.getAttribute("jobs");
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 for (Job job : jobs) {
             %>
-            <div class="card job-card">
+            <div class="card job-card mt-3">
                 <div class="card-body">
                     <div class="text-center text-primary">
                         <i class="far fa-clipboard icon"></i>
@@ -59,12 +82,13 @@
                             </div>
                         </div>
                     </div>
+                    <p> <%= job.getDescription() %></p>
 
                     <div class="text-center">
                         <% if ("employer".equals(session.getAttribute("userRole"))) { %>
                             <a href="edit_job?id=<%= job.getId() %>" class="btn btn-sm btn-success">Edit <i class="fas fa-edit"></i></a>
                             <a href="delete_job?id=<%= job.getId() %>" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></a>
-                            <a href="job_candidates?id=<%= job.getId() %>" class="btn btn-sm btn-danger">Candidates <i class="fas fa-trash-alt"></i></a>
+                            <a href="job_candidates?id=<%= job.getId() %>" class="btn btn-sm btn-success">Candidates</i></a>
                         <% } else { %>
                             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#applyModal<%= job.getId() %>">Apply <i class="fas fa-paper-plane"></i></button>
                             <!-- Apply Modal -->

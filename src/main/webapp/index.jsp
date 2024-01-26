@@ -1,6 +1,6 @@
 <%
 if(session.getAttribute("email") == null) {
-    response.sendRedirect("login.jsp");
+    response.sendRedirect("home.jsp");
 } else {
     String userRolee = (String) session.getAttribute("userRole");
 
@@ -14,7 +14,7 @@ if(session.getAttribute("email") == null) {
             <meta name="description" content="" />
             <meta name="author" content="" />
             <title>Job Portal</title>
-
+			
             <!-- Bootstrap CSS -->
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         </head>

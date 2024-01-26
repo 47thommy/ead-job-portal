@@ -34,12 +34,12 @@ public class ForgotPasswordServlet extends HttpServlet {
 		HttpSession mySession = request.getSession();
 		
 		if(email!=null || !email.equals("")) {
-			
+			// sending otp
 			Random rand = new Random();
 			otpvalue = rand.nextInt(1255650);
 
-			String to = email;
-			
+			String to = email;// change accordingly
+			// Get the session object
 			Properties props = new Properties();
 			props.put("mail.smtp.host", "smtp.gmail.com");
 			props.put("mail.smtp.socketFactory.port", "465");
@@ -48,17 +48,17 @@ public class ForgotPasswordServlet extends HttpServlet {
 			props.put("mail.smtp.port", "465");
 			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("47thommy@gmail.com", "mbop gxsj kpnj vxql");
+					return new PasswordAuthentication("47thommy@gmail.com", "ygtc xiur byog raxp");
 				}
 			});
-			
+			// compose message
 			try {
 				MimeMessage message = new MimeMessage(session);
-				message.setFrom(new InternetAddress(email));
+				message.setFrom(new InternetAddress(email));// change accordingly
 				message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 				message.setSubject("Password Reset");
 				message.setText("your Verification Code is: " + otpvalue);
-				
+				// send message
 				Transport.send(message);
 				System.out.println("message sent successfully");
 			}
@@ -68,11 +68,11 @@ public class ForgotPasswordServlet extends HttpServlet {
 			}
 			dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
 			request.setAttribute("message","Verification code is sent to your email");
-			
+			//request.setAttribute("connection", con);
 			mySession.setAttribute("otp",otpvalue); 
 			mySession.setAttribute("email",email); 
 			dispatcher.forward(request, response);
-			
+			//request.setAttribute("status", "success");
 		}
 		
 	}

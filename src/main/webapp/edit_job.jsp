@@ -11,6 +11,7 @@
 </head>
 <body style="background-color: #f0f1f2;">
     <%@ include file="all_component/navbar.jsp" %>
+   
     <div class="container p-2">
         <div class="col-md-10 offset-md-1">
             <div class="card">
@@ -18,6 +19,7 @@
                     <div class="text-center text-success">
                         <i class="fas fa-user-friends fa-3x"></i>
                         <h5>Edit Jobs</h5>
+                         <input type="hidden" id="status" value="<%=request.getAttribute("status")%>" >
                     </div>
                     <form action="update_job" method="post">
                         <%-- Using scriptlet to access the job attribute --%>
@@ -73,5 +75,27 @@
             </div>
         </div>
     </div>
+    
+    	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="alert/dist/sweetalert.css">
+	
+	
+	
+	
+
+	
+
+
+<script type="text/javascript">
+
+var status = document.getElementById("status").value;
+
+if(status == "invalid"){
+	swal("Sorry","Job not updated","error");
+}
+if(status == "success"){
+	swal("Congrats","Job changed successfully","success");
+}
+</script>
 </body>
 </html>
