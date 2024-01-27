@@ -1,10 +1,13 @@
-<%@ page import="com.jobportal.job.Job" %>
+<%
+if(session.getAttribute("email") == null) {
+    response.sendRedirect("home.jsp");
+}
+%>
+<%@ page import="com.jobportal.job.Candidate" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="all_component/all_css.jsp" %>
-<%@ page import="com.jobportal.job.Candidate" %>
-
 
 <!DOCTYPE html>
 <html>
@@ -32,18 +35,29 @@
                 <thead>
                 <tr>
                     <th>Email</th>
+                    <th>Phone number</th>
                     <th>Applied Time</th>
+                    <!-- <th>Cover Letter</th> -->
                     <th>Resume</th>
                 </tr>
                 </thead>
                 <tbody>
                     <% List<Candidate> candidates = (List<Candidate>) request.getAttribute("candidates");
                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                       for (Candidate candidate : candidates) { %>
+                       
+                       for (Candidate candidate : candidates) { 
+                    	     String coverletter = candidate.getCover();
+                    	   
+                       %>
+                       <p> 
+                       
+                       </p>
                         <tr>
                             <td><%= candidate.getEmail() %></td>
+                            <td><%= candidate.getPhone() %></td>
                             <td><%= dateFormat.format(candidate.getAppliedTime()) %></td>
-                            <td><a href="uploads/<%= candidate.getResumeUrl() %>" >View Resume</a></td>
+                           <%--  <td><a href="#" onclick="openCoverLetter('<%= coverletter %>')">Cover Letter</a></td> --%>
+                            <td><a href="uploads/<%= candidate.getResumeUrl() %>" target="_blank">View Resume</a></td>
                         </tr>
                     <% } %>
                 </tbody>
@@ -58,9 +72,33 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- Your custom JavaScript -->
 <script>
-    // Your custom JavaScript goes here
+    function openCoverLetter(coverContent) {
+        // Replace newlines with HTML line breaks
+        coverContent = coverContent.replace(/\n/g, "<br>");
+        // Display the cover letter content in a modal
+        $('#coverLetterModalBody').html(coverContent);
+        $('#coverLetterModal').modal('show');
+    }
 </script>
 <!-- Font Awesome JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+
+<!-- Modal for Cover Letter -->
+<div class="modal fade" id="coverLetterModal" tabindex="-1" role="dialog" aria-labelledby="coverLetterModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="coverLetterModalLabel">Cover Letters</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="coverLetterModalBody">
+                <!-- Cover letter content will be inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

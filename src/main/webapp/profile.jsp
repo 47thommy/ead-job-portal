@@ -1,10 +1,15 @@
+<%
+if(session.getAttribute("email") == null) {
+    response.sendRedirect("home.jsp");
+}
+%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>profile</title>
 <%@include file="all_component/all_css.jsp"%> <base>
     <style>
         body {
@@ -104,7 +109,7 @@
                 </div>
                 
                 <div class="text-center mt-3">
-                    <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
+                    
                     <h5 class="mt-2 mb-0"><%=session.getAttribute("name") %></h5>
                     <span><%=session.getAttribute("email") %></span>
                     
@@ -113,13 +118,6 @@
                     
                     </div>
                     
-                     <ul class="social-list">
-                        <li><i class="fa fa-facebook"></i></li>
-                        <li><i class="fa fa-dribbble"></i></li>
-                        <li><i class="fa fa-instagram"></i></li>
-                        <li><i class="fa fa-linkedin"></i></li>
-                        <li><i class="fa fa-google"></i></li>
-                    </ul>
                     
                     <div class="buttons">
                         

@@ -23,10 +23,10 @@ public class Job {
     }
 
     public Job() {
-        
+
     }
 
-  
+
     public int getId() {
         return id;
     }
@@ -55,7 +55,7 @@ public class Job {
         return postTime;
     }
 
-    
+
     public void setId(int id) {
         this.id = id;
     }
@@ -84,5 +84,5 @@ public class Job {
         this.postTime = postTime;
     }
 
-   
+
 }

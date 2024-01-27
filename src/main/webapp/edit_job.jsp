@@ -1,3 +1,9 @@
+<%
+if(session.getAttribute("email") == null) {
+    response.sendRedirect("home.jsp");
+}
+%>
+
 <%@ page import="com.jobportal.job.Job" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="all_component/all_css.jsp" %>

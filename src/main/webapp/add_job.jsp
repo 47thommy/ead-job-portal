@@ -1,20 +1,24 @@
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%> --%>
+<%
+if(session.getAttribute("email") == null) {
+    response.sendRedirect("home.jsp");
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Admin: Add Jobs</title>
+<title>Add Jobs</title>
 <%@include file="all_component/all_css.jsp"%>
 </head>
 <body style="background-color: #f0f1f2;">
 <%--     <c:if test="${userobj.role ne 'admin' }">
         <c:redirect url="login.jsp"></c:redirect>
     </c:if> --%>
+ <input type="hidden" id="status" value="<%=request.getAttribute("status")%>" >
 <input type="hidden" name="user_email" value="<%= session.getAttribute("email") %>">
 
 	<%@include file="all_component/navbar.jsp"%>
-	<input type="hidden" id="status" value="<%=request.getAttribute("status")%>" >
+	
 	<div class="container p-2">
 		<div class="col-md-10 offset-md-1">
 			<div class="card">
@@ -88,11 +92,11 @@
 <script type="text/javascript">
 
 var status = document.getElementById("status").value;
-if(status=="Job added successfully"){
+if(status=="success"){
 	swal("Congrats","Job added successfully","success");
 }
-if(status=="failed"){
-	swal("Sorry","Job could not be created","error");
+if(status=="invalid"){
+	swal("Sorry","provide all the required informations","error");
 }
 </script>
 </body>

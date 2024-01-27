@@ -6,19 +6,31 @@ public class Candidate {
     private String email;
     private Timestamp appliedTime;
     private String resumeUrl;
+    private String phone;
+    private String cover;
 
-    
 
-    public Candidate(String email, Timestamp appliedTime, String resumeUrl) {
+
+    public Candidate(String email, Timestamp appliedTime, String resumeUrl, String phone, String cover) {
         this.email = email;
         this.appliedTime = appliedTime;
         this.resumeUrl = resumeUrl;
-    }
+        this.phone=phone;
+        this.cover=cover;    }
 
-   
+
 
     public String getEmail() {
         return email;
+    }
+    public String getCover() {
+        return cover;
+    }
+    public String getPhone() {
+        return phone;
+    }
+    public String setPhone() {
+        return phone;
     }
 
     public void setEmail(String email) {

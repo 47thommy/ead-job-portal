@@ -1,3 +1,8 @@
+<%
+if(session.getAttribute("email") == null) {
+    response.sendRedirect("home.jsp");
+}
+%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.jobportal.job.Job" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -19,36 +24,33 @@
     </style>
 </head>
 <body style="background-color: #f0f1f2;">
+<input type="hidden" id="status" value="<%=request.getAttribute("status")%>" >
 <input type="hidden" name="userRole" value="<%= session.getAttribute("userRole") %>">
 
 <%@ include file="all_component/navbar.jsp" %>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-md-6">
-            <h5 class="text-center text-primary">All Jobs</h5>
-        </div>
-        <div class="col-md-6">
-            <form action="search" method="get" class="d-flex">
-                <div class="input-group">
-                    <div class="form-outline" data-mdb-input-init>
-                        <input placeholder ="search" type="search" name="search" id="form1" class="form-control" />
-                        
+            <div class="container mt-3">
+                <div class="row">
+	<div class="col-md-6">
+	    <h5 class="text-center text-primary"><a href="view_jobs">All Jobs</a></h5>
+	</div>
+
+                    <div class="col-md-6">
+                        <form action="search" method="get" class="d-flex">
+                            <div class="input-group">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input placeholder="search" type="search" name="search" id="form1" class="form-control"/>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm" data-mdb-ripple-init>
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm" data-mdb-ripple-init>
-                        <i class="fas fa-search"></i>
-                    </button>
                 </div>
-            </form>
-        </div>
-    </div>
-  
-</div>
-
-
-            
+            </div>
 
             <%
                 List<Job> jobs = (List<Job>) request.getAttribute("jobs");
@@ -90,35 +92,41 @@
                             <a href="delete_job?id=<%= job.getId() %>" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></a>
                             <a href="job_candidates?id=<%= job.getId() %>" class="btn btn-sm btn-success">Candidates</i></a>
                         <% } else { %>
-                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#applyModal<%= job.getId() %>">Apply <i class="fas fa-paper-plane"></i></button>
-                            <!-- Apply Modal -->
-                            <div class="modal fade" id="applyModal<%= job.getId() %>" tabindex="-1" role="dialog" aria-labelledby="applyModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="applyModalLabel">Apply for <%= job.getTitle() %></h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Your form for phone number and cover letter -->
-                                            <form action="apply_job" method="post">
-                                                <div class="form-group">
-                                                    <label for="phoneNumber">Phone Number</label>
-                                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="coverLetter">Cover Letter</label>
-                                                    <textarea class="form-control" id="coverLetter" name="coverLetter" rows="4" required></textarea>
-                                                </div>
-                                                <input type="hidden" name="jobId" value="<%= job.getId() %>">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </form>
+                            <% if ("Closed".equals(job.getStatus())) { %>
+                                <!-- If job status is closed, disable the Apply button -->
+                                <button class="btn btn-sm btn-primary" disabled>Apply <i class="fas fa-paper-plane"></i></button>
+                            <% } else { %>
+                                <!-- Apply button with modal for other cases -->
+                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#applyModal<%= job.getId() %>">Apply <i class="fas fa-paper-plane"></i></button>
+                                <!-- Apply Modal -->
+                                <div class="modal fade" id="applyModal<%= job.getId() %>" tabindex="-1" role="dialog" aria-labelledby="applyModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="applyModalLabel">Apply for <%= job.getTitle() %></h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Your form for phone number and cover letter -->
+                                                <form action="apply_job" method="post">
+                                                    <div class="form-group">
+                                                        <label for="phoneNumber">Phone Number</label>
+                                                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="coverLetter">Cover Letter</label>
+                                                        <textarea class="form-control" id="coverLetter" name="coverLetter" rows="4" required></textarea>
+                                                    </div>
+                                                    <input type="hidden" name="jobId" value="<%= job.getId() %>">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <% } %>
                         <% } %>
                     </div>
                 </div>
@@ -148,5 +156,23 @@
 </script>
 <!-- Font Awesome JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="alert/dist/sweetalert.css">
+	
+	
+	
+	
+
+	
+
+
+<script type="text/javascript">
+
+var status = document.getElementById("status").value;
+if(status=="success"){
+	swal("congrats","your application is sent successfully","success");
+}
+
+</script>
 </body>
 </html>

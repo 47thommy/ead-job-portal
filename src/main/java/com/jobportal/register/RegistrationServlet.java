@@ -76,7 +76,7 @@ public class RegistrationServlet extends HttpServlet {
                     Part filePart = request.getPart("resume");
                     String fileName = getFileName(filePart);
                     String localFilePath = uploadToLocalFolder(filePart, fileName);
-                    
+
 
                     // Insert user data into the database
                     PreparedStatement pst = con.prepareStatement(

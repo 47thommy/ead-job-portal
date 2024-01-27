@@ -29,14 +29,15 @@
                                     <li class="nav-item">
                         <a class="nav-link items text-dark" href="view_jobs">View Jobs</a>
                     </li>
-                <li class="nav-item">
-                    <a class="nav-link text-danger items" href="logout">Logout</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link items text-dark" href="profile.jsp">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark " href="#"><%=session.getAttribute("email") %></a>
+                </li>
+                                <li class="nav-item">
+                    <a class="nav-link text-danger items" href="logout">Logout</a>
                 </li>
             <% } %>
         </ul>

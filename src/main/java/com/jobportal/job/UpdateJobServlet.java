@@ -51,18 +51,18 @@ public class UpdateJobServlet extends HttpServlet {
             if (rowsAffected > 0) {
             	request.setAttribute("userRole", "employer");
             	request.setAttribute("status", "success");
-            	
-            	
-                
+
+
+
             } else {
             	request.setAttribute("status", "invalid");
-            	
-                
+
+
             }
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            
+
         } finally {
             try {
                 if (con != null) {

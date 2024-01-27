@@ -76,10 +76,11 @@ public class EditJobServlet extends HttpServlet {
                 }
             }
         } else {
-            
+
             response.sendRedirect("view_job.jsp");
         }
     }
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String jobIdString = request.getParameter("id");
@@ -133,7 +134,7 @@ public class EditJobServlet extends HttpServlet {
                 }
             }
         } else {
-            
+
             response.sendRedirect("view_job.jsp");
         }
     }

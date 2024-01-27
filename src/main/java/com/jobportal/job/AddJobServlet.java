@@ -31,12 +31,39 @@ public class AddJobServlet extends HttpServlet {
         String category = request.getParameter("category");
         String status = request.getParameter("status");
         String description = request.getParameter("desc");
+        
 
         HttpSession session = request.getSession();
         String user_email = (String) session.getAttribute("email");
 
         Connection con = null;
         RequestDispatcher dispatcher = null;
+        
+        if (title == null || title.equals("")) {
+            request.setAttribute("status", "invalid");
+            dispatcher = request.getRequestDispatcher("add_job.jsp");
+            dispatcher.forward(request, response);
+        } else if (category == null || category.equals("") || category.equals("Choose....")) {
+            request.setAttribute("status", "invalid");
+            dispatcher = request.getRequestDispatcher("add_job.jsp");
+            dispatcher.forward(request, response);
+        } else if (location == null || location.equals("") || location.equals("Choose....")) {
+            request.setAttribute("status", "invalid");
+            dispatcher = request.getRequestDispatcher("add_job.jsp");
+            dispatcher.forward(request, response);
+        } else if (description == null || description.equals("")) {
+            request.setAttribute("status", "invalid");
+            dispatcher = request.getRequestDispatcher("add_job.jsp");
+            dispatcher.forward(request, response);
+        }
+        else if (status == null || status.equals("")) {
+            request.setAttribute("status", "invalid");
+            dispatcher = request.getRequestDispatcher("registration.jsp");
+            dispatcher.forward(request, response);
+        }
+        else {
+        	
+        
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -56,6 +83,7 @@ public class AddJobServlet extends HttpServlet {
 
             if (rowCount > 0) {
                 request.setAttribute("succMsg", "Job added successfully");
+                request.setAttribute("status", "success");
                 dispatcher = request.getRequestDispatcher("add_job.jsp");
             } else {
                 request.setAttribute("status", "failed");
@@ -72,6 +100,7 @@ public class AddJobServlet extends HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
         }
     }
 }

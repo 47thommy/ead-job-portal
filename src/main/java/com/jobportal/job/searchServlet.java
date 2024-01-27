@@ -32,12 +32,12 @@ public class searchServlet extends HttpServlet {
         Connection con = null;
         RequestDispatcher dispatcher = null;
         String keyword = request.getParameter("search");
-            
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
 
-                
+
                 PreparedStatement pst = con.prepareStatement("SELECT * FROM jobs WHERE title LIKE ?");
                 pst.setString(1, "%" + keyword + "%");
                 ResultSet resultSet = pst.executeQuery();
@@ -82,12 +82,12 @@ public class searchServlet extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
 
-            
+
             String userEmail = (String) request.getSession().getAttribute("email");
             String userRole = (String) request.getSession().getAttribute("role");
 
             if ("employer".equals(userRole)) {
-                
+
                 PreparedStatement pst = con.prepareStatement("SELECT * FROM jobs WHERE user_email = ?");
                 pst.setString(1, userEmail);
                 ResultSet resultSet = pst.executeQuery();
@@ -107,7 +107,7 @@ public class searchServlet extends HttpServlet {
                     jobs.add(job);
                 }
             } else {
-                
+
                 PreparedStatement pst = con.prepareStatement("SELECT * FROM jobs");
                 ResultSet resultSet = pst.executeQuery();
 

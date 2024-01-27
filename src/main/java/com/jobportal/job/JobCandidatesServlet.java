@@ -27,17 +27,17 @@ public class JobCandidatesServlet extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         int jobId = Integer.parseInt(request.getParameter("id"));
 
-        
+
         List<Candidate> candidates = getCandidatesForJob(jobId);
 
-        
-        request.setAttribute("candidates", candidates);
-        
 
-        
+        request.setAttribute("candidates", candidates);
+
+
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/candidates.jsp");
         dispatcher.forward(request, response);
     }
@@ -47,13 +47,13 @@ public class JobCandidatesServlet extends HttpServlet {
         Connection con = null;
 
         try {
-            
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
 
-            
-            String sql = "SELECT user_email, applied_time, resume_url FROM candidates WHERE job_id = ?";
-           
+
+            String sql = "SELECT user_email, applied_time, resume_url, phone_number,cover_letter FROM candidates WHERE job_id = ?";
+
             try (PreparedStatement pst = con.prepareStatement(sql)) {
                 pst.setInt(1, jobId);
                 ResultSet resultSet = pst.executeQuery();
@@ -62,14 +62,18 @@ public class JobCandidatesServlet extends HttpServlet {
                     String email = resultSet.getString("user_email");
                     Timestamp appliedTime = resultSet.getTimestamp("applied_time");
                     String resumeUrl = resultSet.getString("resume_url");
-                
-                    Candidate candidate = new Candidate(email, appliedTime, resumeUrl);
+                    String phone = resultSet.getString("phone_number");
+                    String cover = resultSet.getString("cover_letter");
+
+
+                    Candidate candidate = new Candidate(email, appliedTime, resumeUrl ,phone,cover);
+                    System.out.println(candidate.getCover());
                     candidates.add(candidate);
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            
+
         } finally {
             try {
                 if (con != null) {
